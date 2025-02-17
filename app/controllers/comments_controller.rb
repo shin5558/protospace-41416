@@ -1,13 +1,12 @@
 class CommentsController < ApplicationController
 
   def create
-    Comment.create(comment_params)
     @comment = Comment.new(comment_params) 
     if @comment.save
-      redirect_to root_path
+      redirect_to prototype_path(@comment.prototype)
     else
       Rails.logger.debug @comment.errors.full_messages # エラー内容をログ出力
-      render :new, status: :unprocessable_entity
+      redirect_to prototype_path(@comment.prototype)
     end
   end
 
